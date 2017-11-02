@@ -1,8 +1,7 @@
-library(dplyr)
-
 cleanData <- function() {
+  library(dplyr)
   
-    # Read features vector
+  # Read features vector
   features <- read.table("features.txt")
   
   # Read test and train data
@@ -35,7 +34,8 @@ cleanData <- function() {
   dsall <- cbind(sall,yall,xall)
   
   # Update activity with factor names
-  dsall$activity <- factor(dsall$activity, dsall$activity[[1]], dsall$activity[[2]])
+  activityLabels <- read.table("activity_labels.txt")
+  dsall$activity <- factor(dsall$activity, activityLabels[[1]], activityLabels[[2]])
   
   # Calculate mean of each variable for each activity and subject
   resultDS <- group_by(dsall,subject,activity) %>% summarize_all(funs(mean))
